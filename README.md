@@ -1,27 +1,28 @@
 # pyrecipes
 
-A tool to scrape recipes from popular websites and convert them into usable formats like json, yaml etc. 
-
-### Motivation
-
-I use [paprika](https://paprikaapp.com) and it only supports importing of recipes via yaml. I was tired of manually 
-downloading recipes and pasting in paprika from Hello Fresh. After writing a scraper for Hello Fresh I would like it
-to be extensible for other recipe sites.
+A tool to scrape recipes from HelloFresh and export them as YAML for import into [Paprika](https://paprikaapp.com).
 
 ### Usage
+
 ```bash
-docker pull anubhavcodes/pyrecipes
-docker container run --rm -v $PWD:/srv anubhavcodes/pyrecipes "hello_fresh_recipe_url"
+# First time setup
+just install
+
+# Scrape a recipe
+just scrape "https://www.hellofresh.de/recipes/sake-don-bowl-teriyaki-lachsfilet-64e4647c0989be803362ee35"
 ```
 
-The above docker run command will generate a `recipe.yml` in the current directory that you can import directly in your 
-paprikaapp.
+This generates a `.yml` file in the `src/` directory that you can import directly into Paprika.
 
-TODO 
+### Development
 
-- [ ] Add difficulty and preparation to hellofresh
-- [ ] Add images support for hellofresh
-- [ ] Add ability to export to multiple formats
-- [x] Add ability to set name as recipe as the name of export file
-- [ ] Add ability to export multiple recipes in one go
-- [ ] More??
+Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/) for dependency management.
+
+```bash
+just install   # create venv & install dependencies
+just test      # run tests
+```
+
+### How it works
+
+The scraper extracts structured [JSON-LD](https://json-ld.org/) recipe data (`schema.org/Recipe`) embedded in HelloFresh pages, which is more reliable than parsing HTML directly.

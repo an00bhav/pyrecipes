@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# go back to root dir
-cd "${0%/*}/.."
-
-echo "Installing hooks..."
-pre-commit install
-
